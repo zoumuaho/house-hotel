@@ -1,13 +1,13 @@
-package com.house.hotel.commutil;
+package com.house.hotel.webapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class HotelCommutilApplicationTests {
+class HotelWebapiApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
+	@Test
+	void contextLoads() {
+	}
 
 }

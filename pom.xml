@@ -11,6 +11,10 @@
     <!--模块管理-->
     <modules>
         <module>hotel-commutil</module>
+        <module>hotel-dao</module>
+        <module>hotel-dto</module>
+        <module>hotel-service</module>
+        <module>hotel-webapi</module>
     </modules>
 
     <properties>
