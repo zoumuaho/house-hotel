@@ -14,7 +14,16 @@
 	<name>hotel-dto</name>
 
 	<dependencies>
-
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>hotel-commutil</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>hotel-dao</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 
 
