@@ -18,6 +18,14 @@
         <mysql-version>5.1.30</mysql-version>
         <mapper.version>3.4.0</mapper.version>
         <mybatis.version>2.1.5</mybatis.version>
+        <swagger.version>2.9.2</swagger.version>
+        <swagger-bootstrap-ui.version>1.8.7</swagger-bootstrap-ui.version>
+        <commons-lang3.version>3.8.1</commons-lang3.version>
+        <commons-math3.version>3.6.1</commons-math3.version>
+        <commons-collections4.version>4.1</commons-collections4.version>
+        <commons-beanutils.version>1.9.3</commons-beanutils.version>
+        <commons-pool2.version>2.5.0</commons-pool2.version>
+        <commons-io.version>2.6</commons-io.version>
     </properties>
 
     <parent>
@@ -68,6 +76,35 @@
                 <groupId>tk.mybatis</groupId>
                 <artifactId>mapper-spring-boot-starter</artifactId>
                 <version>${mybatis.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>swagger-bootstrap-ui</artifactId>
+                <version>${swagger-bootstrap-ui.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${commons-collections4.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${commons-beanutils.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>${commons-pool2.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

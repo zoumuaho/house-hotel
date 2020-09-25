@@ -1,4 +1,4 @@
-package com.house.hotel.webapi.user;
+package com.house.hotel.webapi.controller.user;
 
 import com.house.hotel.dao.entity.HotelUserInfo;
 import com.house.hotel.service.user.HotelUserInfoService;
