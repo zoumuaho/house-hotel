@@ -39,5 +39,3 @@ mybatis:
   configuration:
     # �����շ�ӳ��
     map-underscore-to-camel-case: true
-swagger:
-  enable: true

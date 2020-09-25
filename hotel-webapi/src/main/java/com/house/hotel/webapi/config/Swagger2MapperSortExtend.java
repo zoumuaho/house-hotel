@@ -27,37 +27,37 @@ import static springfox.documentation.builders.BuilderDefaults.nullToEmptyList;
 @Primary
 public class Swagger2MapperSortExtend extends ServiceModelToSwagger2MapperImpl {
 
-    private  static final Logger logger = LoggerFactory.getLogger(Swagger2MapperSortExtend.class);
+    private static final Logger logger = LoggerFactory.getLogger(Swagger2MapperSortExtend.class);
 
     @Override
     public Swagger mapDocumentation(Documentation from) {
         Swagger swagger = super.mapDocumentation(from);
-        swagger.setPaths( mapApiListings( from.getApiListings() ) );
+        swagger.setPaths(mapApiListings(from.getApiListings()));
         // 可自定义tag的排序
-         List<Tag> tags = swagger.getTags();
+        List<Tag> tags = swagger.getTags();
         Collections.sort(tags, new Comparator<Tag>() {
-             @Override
-             public int compare(Tag left, Tag right) {
-                 int leftNum = 0;
-                 int rightNum = 0;
-                 try{
-                     leftNum = Integer.parseInt(left.getName().split("、")[0].trim());
-                     rightNum = Integer.parseInt(right.getName().split("、")[0].trim());
-                 }catch (Exception e){
-                     try {
-                         leftNum = Integer.parseInt(left.getName().split("-")[0].trim());
-                         rightNum = Integer.parseInt(right.getName().split("-")[0].trim());
-                     } catch (Exception ex) {
-                         leftNum = NumberUtils.toInt(left.getName().split("\\.")[0].trim(),Integer.MAX_VALUE);
-                         rightNum = NumberUtils.toInt(right.getName().split("\\.")[0].trim(),Integer.MAX_VALUE);
-                     }
+            @Override
+            public int compare(Tag left, Tag right) {
+                int leftNum = 0;
+                int rightNum = 0;
+                try {
+                    leftNum = Integer.parseInt(left.getName().split("、")[0].trim());
+                    rightNum = Integer.parseInt(right.getName().split("、")[0].trim());
+                } catch (Exception e) {
+                    try {
+                        leftNum = Integer.parseInt(left.getName().split("-")[0].trim());
+                        rightNum = Integer.parseInt(right.getName().split("-")[0].trim());
+                    } catch (Exception ex) {
+                        leftNum = NumberUtils.toInt(left.getName().split("\\.")[0].trim(), Integer.MAX_VALUE);
+                        rightNum = NumberUtils.toInt(right.getName().split("\\.")[0].trim(), Integer.MAX_VALUE);
+                    }
 
-                 }
-                 int position = Integer.compare(leftNum, rightNum);
-                 return position;
-             }
-         });
-         swagger.setTags(tags);
+                }
+                int position = Integer.compare(leftNum, rightNum);
+                return position;
+            }
+        });
+        swagger.setTags(tags);
         return swagger;
     }
 
@@ -66,13 +66,12 @@ public class Swagger2MapperSortExtend extends ServiceModelToSwagger2MapperImpl {
         Map<String, Path> paths = new LinkedHashMap<>();
         Multimap<String, ApiListing> apiListingMap = LinkedListMultimap.create();
         Iterator iter = apiListings.entries().iterator();
-        while(iter.hasNext())
-        {
-            Map.Entry<String, ApiListing> entry = (Map.Entry<String, ApiListing>)iter.next();
-            ApiListing apis =  entry.getValue();
+        while (iter.hasNext()) {
+            Map.Entry<String, ApiListing> entry = (Map.Entry<String, ApiListing>) iter.next();
+            ApiListing apis = entry.getValue();
             List<ApiDescription> apiDesc = apis.getApis();
             List<ApiDescription> newApi = new ArrayList<>();
-            for(ApiDescription a:apiDesc){
+            for (ApiDescription a : apiDesc) {
                 newApi.add(a);
             }
             Collections.sort(newApi, new Comparator<ApiDescription>() {
@@ -82,7 +81,7 @@ public class Swagger2MapperSortExtend extends ServiceModelToSwagger2MapperImpl {
                     int rightPos = right.getOperations().size() == 1 ? right.getOperations().get(0).getPosition() : 0;
 
                     int position = Integer.compare(leftPos, rightPos);
-                    if(position == 0) {
+                    if (position == 0) {
                         position = left.getPath().compareTo(right.getPath());
                     }
 
@@ -95,7 +94,7 @@ public class Swagger2MapperSortExtend extends ServiceModelToSwagger2MapperImpl {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            apiListingMap.put(entry.getKey(),apis);
+            apiListingMap.put(entry.getKey(), apis);
         }
 
         for (ApiListing each : apiListingMap.values()) {
@@ -115,14 +114,14 @@ public class Swagger2MapperSortExtend extends ServiceModelToSwagger2MapperImpl {
         return path;
     }
 
-    public void modify(Object object, String fieldName, Object newFieldValue) throws Exception {
+    private void modify(Object object, String fieldName, Object newFieldValue) throws Exception {
         Field field = object.getClass().getDeclaredField(fieldName);
 
         Field modifiersField = Field.class.getDeclaredField("modifiers");
         modifiersField.setAccessible(true); //Field 的 modifiers 是私有的
         modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
 
-        if(!field.isAccessible()) {
+        if (!field.isAccessible()) {
             field.setAccessible(true);
         }
 
