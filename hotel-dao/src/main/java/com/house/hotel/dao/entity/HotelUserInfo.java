@@ -23,7 +23,11 @@ public class HotelUserInfo {
      */
     @Column(name = "user_account")
     private String userAccount;
-
+    /**
+     * 账户类型 1超级管理员 2门店管理员
+     */
+    @Column(name = "account_type")
+    private Integer accountType;
     /**
      * 密码
      */
@@ -44,7 +48,7 @@ public class HotelUserInfo {
     /**
      * 是否有效 0无效 1有效
      */
-    private Boolean disabled;
+    private Integer disabled;
 
     /**
      * 备注信息
@@ -118,6 +122,23 @@ public class HotelUserInfo {
     }
 
     /**
+     * 账户类型
+     * @return
+     */
+    public Integer getAccountType() {
+        return accountType;
+    }
+
+    /**
+     * 设置账户类型
+     * @param accountType 账户类型
+     * @return
+     */
+    public void setAccountType(Integer accountType) {
+        this.accountType = accountType;
+    }
+
+    /**
      * 获取密码
      *
      * @return password - 密码
@@ -176,7 +197,7 @@ public class HotelUserInfo {
      *
      * @return disabled - 是否有效 0无效 1有效
      */
-    public Boolean getDisabled() {
+    public Integer getDisabled() {
         return disabled;
     }
 
@@ -185,7 +206,7 @@ public class HotelUserInfo {
      *
      * @param disabled 是否有效 0无效 1有效
      */
-    public void setDisabled(Boolean disabled) {
+    public void setDisabled(Integer disabled) {
         this.disabled = disabled;
     }
 
