@@ -28,9 +28,9 @@ public class HotelUserInfoQueryController {
 
     @ApiOperation(value = "查询用户信息列表")
     @GetMapping(value = "/list")
-    public List<HotelUserInfoModel> getHotelUserInfoList() {
+    public BaseResult<List<HotelUserInfoModel>> getHotelUserInfoList() {
         List<HotelUserInfoModel> userInfoModelList = hotelUserInfoService.listHotelUserInfo();
-        return userInfoModelList;
+        return BaseResult.success(userInfoModelList);
     }
 
 }

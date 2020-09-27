@@ -39,7 +39,7 @@ public class Swagger2Config {
                 .title("house hotel swagger-bootstrap-ui Restful APIs 默认访问地址:http://${host}:${port}/doc.html")
                 .description("house hotel swagger-bootstrap-ui Restful APIs")
                 .version("1.0.0")
-                .termsOfServiceUrl("http://localhost:8080/")
+                .termsOfServiceUrl("http://localhost:8098/")
                 .build();
 
         return new Docket(DocumentationType.SWAGGER_2)

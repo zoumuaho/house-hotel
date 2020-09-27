@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +29,11 @@ public class UserLoginController {
 
     @ApiOperation("用户登录")
     @PostMapping(value = "/login")
-    public HotelUserInfoModel userLogin(@ApiParam @RequestBody UserLoginParam userLoginParam) {
-        return userLoginService.userLogin(userLoginParam);
+    public BaseResult<HotelUserInfoModel> userLogin(@ApiParam @RequestBody UserLoginParam userLoginParam, BindingResult result) {
+        HotelUserInfoModel hotelUserInfoModel = userLoginService.userLogin(userLoginParam);
+        if (hotelUserInfoModel == null) {
+            return BaseResult.validateFailed("用户名或者密码错误");
+        }
+        return BaseResult.success(hotelUserInfoModel);
     }
 }
