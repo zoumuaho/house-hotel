@@ -1,10 +1,8 @@
 package com.house.hotel.webapi.controller.user;
 
-import com.house.hotel.dao.entity.HotelUserInfo;
 import com.house.hotel.dto.BaseResult;
 import com.house.hotel.dto.user.model.HotelUserInfoModel;
-import com.house.hotel.service.user.HotelUserInfoService;
-import com.house.hotel.webapi.config.BaseResultUtil;
+import com.house.hotel.service.user.HotelUserInfoQueryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +22,7 @@ import java.util.List;
 public class HotelUserInfoQueryController {
 
     @Autowired
-    private HotelUserInfoService hotelUserInfoService;
+    private HotelUserInfoQueryService hotelUserInfoService;
 
     @ApiOperation(value = "查询用户信息列表")
     @GetMapping(value = "/list")

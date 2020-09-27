@@ -15,7 +15,7 @@ import java.util.List;
  * @date 2020/9/25 11:41
  */
 @Service
-public class HotelUserInfoService {
+public class HotelUserInfoQueryService {
     @Autowired
     private HotelUserInfoMapper hotelUserInfoMapper;
 
