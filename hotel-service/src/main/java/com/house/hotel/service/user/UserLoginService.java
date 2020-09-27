@@ -27,12 +27,11 @@ public class UserLoginService {
      */
     public HotelUserInfoModel userLogin(UserLoginParam loginParam) {
         HotelUserInfoModel userInfoModel = new HotelUserInfoModel();
-        Example example = new Example(HotelUserInfo.class);
-        example.createCriteria()
-                .andEqualTo("userAccount", loginParam.getUsername())
-                .andEqualTo("password",loginParam.getPassword());
-        HotelUserInfo hotelUserInfo = hotelUserInfoMapper.selectOneByExample(example);
-        if (hotelUserInfo == null) {
+        HotelUserInfo hotelUserInfo = new HotelUserInfo();
+        hotelUserInfo.setUserAccount(loginParam.getUsername());
+        hotelUserInfo.setPassword(loginParam.getPassword());
+        HotelUserInfo result = hotelUserInfoMapper.selectOne(hotelUserInfo);
+        if (result == null) {
             return userInfoModel;
         }
         BeanUtils.copyProperties(hotelUserInfo, userInfoModel);

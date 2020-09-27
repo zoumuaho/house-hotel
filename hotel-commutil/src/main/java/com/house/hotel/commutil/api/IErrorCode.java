@@ -1,4 +1,4 @@
-package com.house.hotel.dto;
+package com.house.hotel.commutil.api;
 
 /**
  * 封装API错误码

@@ -1,6 +1,6 @@
 package com.house.hotel.webapi.controller.user;
 
-import com.house.hotel.dto.BaseResult;
+import com.house.hotel.commutil.api.BaseResult;
 import com.house.hotel.dto.user.model.HotelUserInfoModel;
 import com.house.hotel.service.user.HotelUserInfoQueryService;
 import io.swagger.annotations.Api;

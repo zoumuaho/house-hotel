@@ -1,6 +1,5 @@
-package com.house.hotel.dto;
+package com.house.hotel.commutil.api;
 
-import com.house.hotel.dto.user.ResultCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 

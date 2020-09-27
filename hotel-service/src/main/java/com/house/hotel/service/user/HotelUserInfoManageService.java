@@ -1,5 +1,8 @@
 package com.house.hotel.service.user;
 
+import com.house.hotel.dao.mapper.HotelUserInfoMapper;
+import com.house.hotel.dto.user.param.UserRegisterParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -8,9 +11,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class HotelUserInfoManageService {
+    @Autowired
+    private HotelUserInfoMapper userInfoMapper;
+
+    public int addUser(UserRegisterParam registerParam){
 
 
-    public int addUser(){
         return 0;
     }
 

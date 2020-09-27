@@ -1,6 +1,4 @@
-package com.house.hotel.dto.user;
-
-import com.house.hotel.dto.IErrorCode;
+package com.house.hotel.commutil.api;
 
 /**
  * @author muhao.zou

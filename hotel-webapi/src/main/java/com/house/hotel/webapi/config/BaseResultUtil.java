@@ -1,6 +1,6 @@
 package com.house.hotel.webapi.config;
 
-import com.house.hotel.dto.BaseResult;
+import com.house.hotel.commutil.api.BaseResult;
 
 /**
  * @auhtor muhao.zou

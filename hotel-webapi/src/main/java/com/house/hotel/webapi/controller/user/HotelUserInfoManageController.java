@@ -1,12 +1,14 @@
 package com.house.hotel.webapi.controller.user;
 
-import com.house.hotel.dto.BaseResult;
+import com.house.hotel.commutil.api.BaseResult;
+import com.house.hotel.dto.user.param.UserRegisterParam;
 import com.house.hotel.service.user.HotelUserInfoManageService;
-import com.house.hotel.webapi.config.BaseResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,8 +25,8 @@ public class HotelUserInfoManageController {
 
     @ApiOperation(value = "新增用户")
     @PostMapping(value = "/add")
-    public BaseResult addUser() {
-        int count = userInfoManageService.addUser();
+    public BaseResult addUser(@ApiParam @RequestBody UserRegisterParam registerParam) {
+        int count = userInfoManageService.addUser(registerParam);
         if (count > 0) {
             return BaseResult.success(count);
         }
