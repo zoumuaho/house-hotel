@@ -34,7 +34,7 @@ public class UserLoginService {
         if (result == null) {
             return userInfoModel;
         }
-        BeanUtils.copyProperties(hotelUserInfo, userInfoModel);
+        BeanUtils.copyProperties(result, userInfoModel);
         return userInfoModel;
     }
 }
