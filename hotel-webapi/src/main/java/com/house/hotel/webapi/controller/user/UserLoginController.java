@@ -24,7 +24,7 @@ public class UserLoginController {
 
     @ApiOperation("用户登录")
     @PostMapping(value = "/login")
-    public BaseResult<HotelUserInfoModel> userLogin(@ApiParam @RequestBody UserLoginParam userLoginParam) {
+    public BaseResult<HotelUserInfoModel> userLogin(@RequestBody UserLoginParam userLoginParam) {
         HotelUserInfoModel hotelUserInfoModel = userLoginService.userLogin(userLoginParam);
         if (hotelUserInfoModel == null) {
             return BaseResult.validateFailed("用户名或者密码错误");
