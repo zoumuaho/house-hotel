@@ -67,200 +67,102 @@ public class HotelUserInfo {
     @Column(name = "modify_date")
     private Date modifyDate;
 
-    /**
-     * 获取主键ID
-     *
-     * @return user_id - 主键ID
-     */
     public Long getUserId() {
         return userId;
     }
 
-    /**
-     * 设置主键ID
-     *
-     * @param userId 主键ID
-     */
-    public void setUserId(Long userId) {
+    public HotelUserInfo setUserId(Long userId) {
         this.userId = userId;
+        return this;
     }
 
-    /**
-     * 获取姓名
-     *
-     * @return user_name - 姓名
-     */
     public String getUserName() {
         return userName;
     }
 
-    /**
-     * 设置姓名
-     *
-     * @param userName 姓名
-     */
-    public void setUserName(String userName) {
+    public HotelUserInfo setUserName(String userName) {
         this.userName = userName;
+        return this;
     }
 
-    /**
-     * 获取账号
-     *
-     * @return user_account - 账号
-     */
     public String getUserAccount() {
         return userAccount;
     }
 
-    /**
-     * 设置账号
-     *
-     * @param userAccount 账号
-     */
-    public void setUserAccount(String userAccount) {
+    public HotelUserInfo setUserAccount(String userAccount) {
         this.userAccount = userAccount;
+        return this;
     }
 
-    /**
-     * 账户类型
-     * @return
-     */
     public Integer getAccountType() {
         return accountType;
     }
 
-    /**
-     * 设置账户类型
-     * @param accountType 账户类型
-     * @return
-     */
-    public void setAccountType(Integer accountType) {
+    public HotelUserInfo setAccountType(Integer accountType) {
         this.accountType = accountType;
+        return this;
     }
 
-    /**
-     * 获取密码
-     *
-     * @return password - 密码
-     */
     public String getPassword() {
         return password;
     }
 
-    /**
-     * 设置密码
-     *
-     * @param password 密码
-     */
-    public void setPassword(String password) {
+    public HotelUserInfo setPassword(String password) {
         this.password = password;
+        return this;
     }
 
-    /**
-     * 获取所属门店
-     *
-     * @return store_id - 所属门店
-     */
     public String getStoreId() {
         return storeId;
     }
 
-    /**
-     * 设置所属门店
-     *
-     * @param storeId 所属门店
-     */
-    public void setStoreId(String storeId) {
+    public HotelUserInfo setStoreId(String storeId) {
         this.storeId = storeId;
+        return this;
     }
 
-    /**
-     * 获取角色
-     *
-     * @return role_id - 角色
-     */
     public Integer getRoleId() {
         return roleId;
     }
 
-    /**
-     * 设置角色
-     *
-     * @param roleId 角色
-     */
-    public void setRoleId(Integer roleId) {
+    public HotelUserInfo setRoleId(Integer roleId) {
         this.roleId = roleId;
+        return this;
     }
 
-    /**
-     * 获取是否有效 0无效 1有效
-     *
-     * @return disabled - 是否有效 0无效 1有效
-     */
     public Integer getDisabled() {
         return disabled;
     }
 
-    /**
-     * 设置是否有效 0无效 1有效
-     *
-     * @param disabled 是否有效 0无效 1有效
-     */
-    public void setDisabled(Integer disabled) {
+    public HotelUserInfo setDisabled(Integer disabled) {
         this.disabled = disabled;
+        return this;
     }
 
-    /**
-     * 获取备注信息
-     *
-     * @return remark - 备注信息
-     */
     public String getRemark() {
         return remark;
     }
 
-    /**
-     * 设置备注信息
-     *
-     * @param remark 备注信息
-     */
-    public void setRemark(String remark) {
+    public HotelUserInfo setRemark(String remark) {
         this.remark = remark;
+        return this;
     }
 
-    /**
-     * 获取创建日期
-     *
-     * @return create_date - 创建日期
-     */
     public Date getCreateDate() {
         return createDate;
     }
 
-    /**
-     * 设置创建日期
-     *
-     * @param createDate 创建日期
-     */
-    public void setCreateDate(Date createDate) {
+    public HotelUserInfo setCreateDate(Date createDate) {
         this.createDate = createDate;
+        return this;
     }
 
-    /**
-     * 获取修改日期
-     *
-     * @return modify_date - 修改日期
-     */
     public Date getModifyDate() {
         return modifyDate;
     }
 
-    /**
-     * 设置修改日期
-     *
-     * @param modifyDate 修改日期
-     */
-    public void setModifyDate(Date modifyDate) {
+    public HotelUserInfo setModifyDate(Date modifyDate) {
         this.modifyDate = modifyDate;
+        return this;
     }
 }

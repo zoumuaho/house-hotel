@@ -16,4 +16,11 @@
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
   </resultMap>
+
+
+  <select id="getHrRolesById" resultType="com.house.hotel.dao.entity.HotelRole">
+    select hr.* from
+    hotel_role hr,hotel_user_role hur
+    where hur.`role_id`=hr.`id` and hur.`user_id`=#{id}
+  </select>
 </mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.generator.mapper.HotelMenuRoleMapper">
+  <resultMap id="BaseResultMap" type="com.mybatis.generator.entity.HotelMenuRole">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="menu_id" jdbcType="INTEGER" property="menuId" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="disabled" jdbcType="BIT" property="disabled" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+</mapper>
