@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.house.hotel.dao.mapper.HotelMenuMapper">
-  <resultMap id="BaseResultMap" type="com.house.hotel.dao.model.HotelMenuConverterModel">
+  <resultMap id="BaseResultMap" type="com.house.hotel.dao.entity.HotelMenu">
     <!--
       WARNING - @mbg.generated
     -->
@@ -10,14 +10,27 @@
     <result column="path" jdbcType="VARCHAR" property="path" />
     <result column="component" jdbcType="VARCHAR" property="component" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="iconCls" jdbcType="VARCHAR" property="iconCls" />
+    <result column="iconCls" jdbcType="VARCHAR" property="iconcls" />
     <result column="keep_alive" jdbcType="BIT" property="keepalive" />
     <result column="require_auth" jdbcType="BIT" property="requireAuth" />
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
     <result column="disabled" jdbcType="BIT" property="disabled" />
   </resultMap>
 
-  <resultMap id="MenuWithRole" type="com.house.hotel.dao.model.HotelMenuConverterModel" extends="BaseResultMap">
+  <resultMap id="BaseResultMap1" type="com.house.hotel.dao.model.HotelMenuConverterModel">
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="component" property="component" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="iconCls" property="iconCls" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="disabled" property="disabled" jdbcType="BIT" />
+    <result column="keep_alive"  property="keepalive" jdbcType="BIT"/>
+    <result column="require_auth" property="requireAuth"  jdbcType="BIT"/>
+  </resultMap>
+
+  <resultMap id="MenuWithRole" type="com.house.hotel.dao.model.HotelMenuConverterModel" extends="BaseResultMap1">
     <collection property="roles" ofType="com.house.hotel.dao.entity.HotelRole">
       <id column="rid" property="id"/>
       <result column="rname" property="name"/>

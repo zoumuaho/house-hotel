@@ -21,7 +21,7 @@ import java.util.Map;
  * @author muhao.zou
  * @date 2020/9/30 16:23
  */
-public class  LoginFilter extends UsernamePasswordAuthenticationFilter {
+public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Autowired
     SessionRegistry sessionRegistry;
     @Override

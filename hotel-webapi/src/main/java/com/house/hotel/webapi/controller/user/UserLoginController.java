@@ -25,10 +25,6 @@ public class UserLoginController {
     @ApiOperation("用户登录")
     @PostMapping(value = "/login")
     public BaseResult<HotelUserInfoModel> userLogin(@RequestBody UserLoginParam userLoginParam) {
-        HotelUserInfoModel hotelUserInfoModel = userLoginService.userLogin(userLoginParam);
-        if (hotelUserInfoModel == null) {
-            return BaseResult.validateFailed("用户名或者密码错误");
-        }
-        return BaseResult.success(hotelUserInfoModel);
+        return BaseResult.failed("尚未登录，请登录!");
     }
 }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mybatis.generator.mapper.HotelRoomMapper">
-  <resultMap id="BaseResultMap" type="com.mybatis.generator.entity.HotelRoom">
-    <!--
+<mapper namespace="com.house.hotel.dao.mapper.HotelRoomMapper">
+  <!--<resultMap id="BaseResultMap" type="com.mybatis.generator.entity.HotelRoom">
+    &lt;!&ndash;
       WARNING - @mbg.generated
-    -->
+    &ndash;&gt;
     <id column="room_id" jdbcType="INTEGER" property="roomId" />
     <result column="room_no" jdbcType="VARCHAR" property="roomNo" />
     <result column="romm_floor" jdbcType="VARCHAR" property="rommFloor" />
@@ -14,5 +14,5 @@
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
-  </resultMap>
+  </resultMap>-->
 </mapper>
