@@ -1,44 +1,45 @@
 package com.house.hotel.service.user;
 
 import com.house.hotel.commutil.api.JwtTokenUtil;
-import com.house.hotel.dao.entity.HotelUserInfo;
-import com.house.hotel.dao.mapper.HotelUserInfoMapper;
-import com.house.hotel.dto.user.model.HotelUserInfoModel;
-import com.house.hotel.dto.user.param.UserLoginParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import tk.mybatis.mapper.entity.Example;
 
 /**
- * @auhtor muhao.zou
- * @date 2020/9/26 16:29
+ * @author muhao.zou
+ * @date 2020/10/13 16:28
  */
 @Service
-public class UserLoginService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserLoginService.class);
-
+public class UserAdminService  {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserAdminService.class);
     @Autowired
-    private HotelUserInfoMapper hotelUserInfoMapper;
-    @Autowired
-    private HotelUserInfoQueryService hotelUserInfoQueryService;
-
+    private UserDetailsService userDetailsService;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Value("${jwt.tokenHead}")
+    private String tokenHead;
+
+    /**
+     * 用户登录
+     * @param username 用户名
+     * @param password  密码
+     * @return
+     */
     public String login(String username, String password) {
         String token = null;
         try {
-            UserDetails userDetails = hotelUserInfoQueryService.loadUserByUsername(username);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             if (!passwordEncoder.matches(password, userDetails.getPassword())) {
                 throw new BadCredentialsException("密码不正确");
             }
@@ -50,4 +51,25 @@ public class UserLoginService {
         }
         return token;
     }
+    public void register(){
+
+    }
+   /* public UmsAdmin register(UmsAdmin umsAdminParam) {
+        UmsAdmin umsAdmin = new UmsAdmin();
+        BeanUtils.copyProperties(umsAdminParam, umsAdmin);
+        umsAdmin.setCreateTime(new Date());
+        umsAdmin.setStatus(1);
+        //查询是否有相同用户名的用户
+        UmsAdminExample example = new UmsAdminExample();
+        example.createCriteria().andUsernameEqualTo(umsAdmin.getUsername());
+        List<UmsAdmin> umsAdminList = adminMapper.selectByExample(example);
+        if (umsAdminList.size() > 0) {
+            return null;
+        }
+        //将密码进行加密操作
+        String encodePassword = passwordEncoder.encode(umsAdmin.getPassword());
+        umsAdmin.setPassword(encodePassword);
+        adminMapper.insert(umsAdmin);
+        return umsAdmin;
+    }*/
 }

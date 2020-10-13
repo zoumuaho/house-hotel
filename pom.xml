@@ -53,7 +53,7 @@
         <fastjson.version>1.2.73</fastjson.version>
         <hutool.version>4.5.7</hutool.version>
         <spring-data-commons.version>2.1.5.RELEASE</spring-data-commons.version>
-
+        <hibernate.validator.version>6.1.0.Final</hibernate.validator.version>
     </properties>
     <dependencies>
         <dependency>
@@ -214,7 +214,12 @@
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
-
+            <!--HibernateValidator-->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate.validator.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <build>

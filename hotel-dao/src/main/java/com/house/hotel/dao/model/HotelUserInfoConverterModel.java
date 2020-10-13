@@ -190,7 +190,7 @@ public class HotelUserInfoConverterModel implements UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return this.userAccount;
     }
 
     @Override

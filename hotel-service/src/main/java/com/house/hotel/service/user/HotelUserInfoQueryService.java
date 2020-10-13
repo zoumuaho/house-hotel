@@ -6,8 +6,6 @@ import com.house.hotel.dao.model.HotelUserInfoConverterModel;
 import com.house.hotel.dto.user.model.HotelUserInfoModel;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +17,11 @@ import java.util.List;
  * @date 2020/9/25 11:41
  */
 @Service
-public class HotelUserInfoQueryService implements UserDetailsService {
+public class HotelUserInfoQueryService  {
     @Autowired
     private HotelUserInfoMapper hotelUserInfoMapper;
 
-    @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+    public HotelUserInfoConverterModel loadUserByUsername(String userName) {
         HotelUserInfoConverterModel hotelUserInfoModel = new HotelUserInfoConverterModel();
         HotelUserInfo userInfo = hotelUserInfoMapper.selectOne(new HotelUserInfo().setUserAccount(userName));
         if (userInfo == null) {

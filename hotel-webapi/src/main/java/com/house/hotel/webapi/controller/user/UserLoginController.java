@@ -1,17 +1,16 @@
 package com.house.hotel.webapi.controller.user;
 
 import com.house.hotel.commutil.api.BaseResult;
-import com.house.hotel.dto.user.model.HotelUserInfoModel;
 import com.house.hotel.dto.user.param.UserLoginParam;
-import com.house.hotel.service.user.UserLoginService;
+import com.house.hotel.service.user.UserAdminService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +25,7 @@ import java.util.Map;
 public class UserLoginController {
 
     @Autowired
-    private UserLoginService userLoginService;
+    private UserAdminService userAdminService;
     @Value("${jwt.tokenHeader}")
     private String tokenHeader;
     @Value("${jwt.tokenHead}")
@@ -35,7 +34,7 @@ public class UserLoginController {
     @ApiOperation("用户登录")
     @PostMapping(value = "/login")
     public BaseResult userLogin(@RequestBody UserLoginParam userLoginParam) {
-        String token = userLoginService.login(userLoginParam.getUsername(), userLoginParam.getPassword());
+        String token = userAdminService.login(userLoginParam.getUsername(), userLoginParam.getPassword());
         if (token == null) {
             return BaseResult.validateFailed("用户名或密码错误");
         }

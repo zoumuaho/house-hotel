@@ -1,5 +1,6 @@
 package com.house.hotel.webapi.config.security.util;
 
+import com.house.hotel.dao.model.HotelUserInfoConverterModel;
 import com.house.hotel.service.user.HotelUserInfoQueryService;
 import com.house.hotel.webapi.config.security.componet.JwtAuthenticationTokenFilter;
 import com.house.hotel.webapi.config.security.componet.RestAuthenticationEntryPoint;
@@ -15,6 +16,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -74,9 +76,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(hotelUserInfoQueryService)
+        auth.userDetailsService(userDetailsService())
                 .passwordEncoder(passwordEncoder());
     }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        //获取登录用户信息
+        return username -> {
+            HotelUserInfoConverterModel admin = hotelUserInfoQueryService.loadUserByUsername(username);
+            if (admin != null) {
+                return admin;
+            }
+            throw new UsernameNotFoundException("用户名或密码错误");
+        };
+    }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

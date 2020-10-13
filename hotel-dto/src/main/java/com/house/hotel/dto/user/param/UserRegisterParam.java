@@ -3,6 +3,8 @@ package com.house.hotel.dto.user.param;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 /**
@@ -17,24 +19,27 @@ public class UserRegisterParam implements Serializable {
      * 姓名
      */
     @ApiModelProperty(value = "姓名")
+    @NotEmpty(message = "姓名不能为空")
     private String userName;
 
     /**
      * 账号
      */
     @ApiModelProperty(value = "账号")
+    @NotEmpty(message = "账号不能为空")
     private String userAccount;
 
     /**
-     * 账户类型 1超级管理员 2门店管理员
+     * 账户类型 1超级管理员 2管理员
      */
-    @ApiModelProperty(value = "账户类型 1超级管理员 2门店管理员")
+    @ApiModelProperty(value = "账户类型 1超级管理员 2管理员")
     private Integer accountType;
 
     /**
      * 密码
      */
     @ApiModelProperty(value = "密码")
+    @NotEmpty(message = "密码不能为空")
     private String password;
 
     /**
