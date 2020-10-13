@@ -1,156 +1,98 @@
 package com.house.hotel.webapi.config.security.util;
 
-import cn.hutool.json.JSONUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.house.hotel.commutil.api.BaseResult;
-import com.house.hotel.dao.model.HotelUserInfoConverterModel;
 import com.house.hotel.service.user.HotelUserInfoQueryService;
-import com.house.hotel.webapi.config.security.componet.CustomFilterInvocationSecurityMetadataSource;
-import com.house.hotel.webapi.config.security.componet.CustomUrlDecisionManager;
-import com.house.hotel.webapi.config.security.componet.LoginFilter;
+import com.house.hotel.webapi.config.security.componet.JwtAuthenticationTokenFilter;
+import com.house.hotel.webapi.config.security.componet.RestAuthenticationEntryPoint;
+import com.house.hotel.webapi.config.security.componet.RestfulAccessDeniedHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.*;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy;
-import org.springframework.security.web.session.ConcurrentSessionFilter;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
 
 /**
  * @author muhao.zou
  * @date 2020/9/30 16:19
  */
 @Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled=true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private HotelUserInfoQueryService hotelUserInfoQueryService;
     @Autowired
-    CustomFilterInvocationSecurityMetadataSource customFilterInvocationSecurityMetadataSource;
+    private RestfulAccessDeniedHandler restfulAccessDeniedHandler;
     @Autowired
-    CustomUrlDecisionManager customUrlDecisionManager;
+    private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    @Override
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.csrf()// 由于使用的是JWT，我们这里不需要csrf
+                .disable()
+                .sessionManagement()// 基于token，所以不需要session
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, // 允许对于网站静态资源的无授权访问
+                        "/",
+                        "/*.html",
+                        "/favicon.ico",
+                        "/**/*.html",
+                        "/**/*.css",
+                        "/**/*.js",
+                        "/swagger-resources/**",
+                        "/v2/api-docs/**"
+                )
+                .permitAll()
+                .antMatchers("/hotel/user/login", "/admin/register")// 对登录注册要允许匿名访问
+                .permitAll()
+                .antMatchers(HttpMethod.OPTIONS)//跨域请求会先进行一次options请求
+                .permitAll()
+//                .antMatchers("/**")//测试时全部运行访问
+//                .permitAll()
+                .anyRequest()// 除上面外的所有请求全部需要鉴权认证
+                .authenticated();
+        // 禁用缓存
+        httpSecurity.headers().cacheControl();
+        // 添加JWT filter
+        httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        //添加自定义未授权和未登录结果返回
+        httpSecurity.exceptionHandling()
+                .accessDeniedHandler(restfulAccessDeniedHandler)
+                .authenticationEntryPoint(restAuthenticationEntryPoint);
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(hotelUserInfoQueryService);
-    }
-
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/doc.html", "/swagger-ui.html","/swagger-resources/**","/swagger/**","/swagger/**","/**/v2/api-docs","/**/*.js",
-                "/webjars/springfox-swagger-ui/**","/**/*.css","/**/*.png","/**/*.ico","/druid/**", "/favicon.ico", "/verifyCode", "/hotel/user/login");
+        auth.userDetailsService(hotelUserInfoQueryService)
+                .passwordEncoder(passwordEncoder());
     }
 
     @Bean
-    LoginFilter loginFilter() throws Exception {
-        LoginFilter loginFilter = new LoginFilter();
-        loginFilter.setAuthenticationSuccessHandler((request, response, authentication) -> {
-                    response.setContentType("application/json;charset=utf-8");
-                    PrintWriter out = response.getWriter();
-                    HotelUserInfoConverterModel userInfo = (HotelUserInfoConverterModel) authentication.getPrincipal();
-                    userInfo.setPassword(null);
-                    out.write(JSONUtil.toJsonStr(BaseResult.success(userInfo, "登录成功")));
-                    out.flush();
-                    out.close();
-                }
-        );
-        loginFilter.setAuthenticationFailureHandler((request, response, exception) -> {
-                    response.setContentType("application/json;charset=utf-8");
-                    PrintWriter out = response.getWriter();
-                    BaseResult baseResult = BaseResult.failed(exception.getMessage());
-                    if (exception instanceof LockedException) {
-                        baseResult.setMessage("账户被锁定，请联系管理员!");
-                    } else if (exception instanceof CredentialsExpiredException) {
-                        baseResult.setMessage("密码过期，请联系管理员!");
-                    } else if (exception instanceof AccountExpiredException) {
-                        baseResult.setMessage("账户过期，请联系管理员!");
-                    } else if (exception instanceof DisabledException) {
-                        baseResult.setMessage("账户被禁用，请联系管理员!");
-                    } else if (exception instanceof BadCredentialsException) {
-                        baseResult.setMessage("用户名或者密码输入错误，请重新输入!");
-                    }
-                    out.write(JSONUtil.toJsonStr(BaseResult.success(baseResult)));
-                    out.flush();
-                    out.close();
-                }
-        );
-        loginFilter.setAuthenticationManager(authenticationManagerBean());
-        loginFilter.setFilterProcessesUrl("/doLogin");
-        ConcurrentSessionControlAuthenticationStrategy sessionStrategy = new ConcurrentSessionControlAuthenticationStrategy(sessionRegistry());
-        sessionStrategy.setMaximumSessions(1);
-        loginFilter.setSessionAuthenticationStrategy(sessionStrategy);
-        return loginFilter;
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+
+    @Bean
+    public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter(){
+        return new JwtAuthenticationTokenFilter();
     }
 
     @Bean
-    SessionRegistryImpl sessionRegistry() {
-        return new SessionRegistryImpl();
-    }
-
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
-                    @Override
-                    public <O extends FilterSecurityInterceptor> O postProcess(O object) {
-                        object.setAccessDecisionManager(customUrlDecisionManager);
-                        object.setSecurityMetadataSource(customFilterInvocationSecurityMetadataSource);
-                        return object;
-                    }
-                })
-                .and()
-                .logout()
-                .logoutSuccessHandler((req, resp, authentication) -> {
-                            resp.setContentType("application/json;charset=utf-8");
-                            PrintWriter out = resp.getWriter();
-                            out.write(JSONUtil.toJsonStr(BaseResult.success("登录成功")));
-                            out.flush();
-                            out.close();
-                        }
-                )
-                .permitAll()
-                .and()
-                .csrf().disable().exceptionHandling()
-                //没有认证时，在这里处理结果，不要重定向
-                .authenticationEntryPoint((req, resp, authException) -> {
-                            resp.setContentType("application/json;charset=utf-8");
-                            resp.setStatus(401);
-                            PrintWriter out = resp.getWriter();
-                            BaseResult baseResult = BaseResult.failed("访问失败");
-                            if (authException instanceof InsufficientAuthenticationException) {
-                                baseResult.setMessage("请求失败，请联系管理员!");
-                            }
-                            out.write(JSONUtil.toJsonStr(BaseResult.success(baseResult)));
-                            out.flush();
-                            out.close();
-                        }
-                );
-        http.addFilterAt(new ConcurrentSessionFilter(sessionRegistry(), event -> {
-            HttpServletResponse resp = event.getResponse();
-            resp.setContentType("application/json;charset=utf-8");
-            resp.setStatus(401);
-            PrintWriter out = resp.getWriter();
-            out.write(JSONUtil.toJsonStr(BaseResult.failed("您已在另一台设备登录，本次登录已下线!")));
-            out.flush();
-            out.close();
-        }), ConcurrentSessionFilter.class);
-        http.addFilterAt(loginFilter(), UsernamePasswordAuthenticationFilter.class);
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
 }

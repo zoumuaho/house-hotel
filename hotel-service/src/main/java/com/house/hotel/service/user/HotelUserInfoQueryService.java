@@ -26,7 +26,7 @@ public class HotelUserInfoQueryService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         HotelUserInfoConverterModel hotelUserInfoModel = new HotelUserInfoConverterModel();
-        HotelUserInfo userInfo = hotelUserInfoMapper.selectOne(new HotelUserInfo().setUserName(userName));
+        HotelUserInfo userInfo = hotelUserInfoMapper.selectOne(new HotelUserInfo().setUserAccount(userName));
         if (userInfo == null) {
             throw new UsernameNotFoundException("用户名不存在!");
         }

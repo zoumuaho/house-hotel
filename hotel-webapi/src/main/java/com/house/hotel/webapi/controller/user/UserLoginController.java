@@ -8,7 +8,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @auhtor muhao.zou
@@ -21,10 +27,21 @@ public class UserLoginController {
 
     @Autowired
     private UserLoginService userLoginService;
+    @Value("${jwt.tokenHeader}")
+    private String tokenHeader;
+    @Value("${jwt.tokenHead}")
+    private String tokenHead;
 
     @ApiOperation("用户登录")
     @PostMapping(value = "/login")
-    public BaseResult<HotelUserInfoModel> userLogin(@RequestBody UserLoginParam userLoginParam) {
-        return BaseResult.failed("尚未登录，请登录!");
+    public BaseResult userLogin(@RequestBody UserLoginParam userLoginParam) {
+        String token = userLoginService.login(userLoginParam.getUsername(), userLoginParam.getPassword());
+        if (token == null) {
+            return BaseResult.validateFailed("用户名或密码错误");
+        }
+        Map<String, String> tokenMap = new HashMap<>();
+        tokenMap.put("token", token);
+        tokenMap.put("tokenHead", tokenHead);
+        return BaseResult.success(tokenMap);
     }
 }
