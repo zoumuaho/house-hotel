@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
 <head>
   <meta charset="utf-8">
   <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -7,15 +8,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
   <!--[if lt IE 9]>
-  <script type="text/javascript" src="../lib/html5shiv.js"></script>
-  <script type="text/javascript" src="../lib/respond.min.js"></script>
+
   <![endif]-->
-  <link rel="stylesheet" type="text/css" href="../static/h-ui/css/H-ui.min.css" />
-  <link rel="stylesheet" type="text/css" href="../static/h-ui.admin.pro/css/H-ui.login.min.css" />
-  <link rel="stylesheet" type="text/css" href="../lib/Hui-iconfont/1.0.9/iconfont.css" />
-  <link rel="stylesheet" type="text/css" href="../static/business/css/style.css" />
+  <link rel="stylesheet" type="text/css" th:href="@{/static/h-ui/css/H-ui.min.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/static/h-ui.admin.pro/css/H-ui.login.min.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/static/lib/Hui-iconfont/1.0.9/iconfont.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/static/business/css/style.css}" />
   <!--[if IE 6]>
-  <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+
   <script>DD_belatedPNG.fix('*');</script><![endif]-->
   <title>后台登录 - h-ui.admin.pro v1.0</title>
   <meta name="keywords" content="h-ui.admin.pro v1.0,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
@@ -42,7 +42,7 @@
         <div class="row clearfix">
           <div class="form-controls col-xs-7 col-xs-offset-3">
             <input id="verificationCode" name="verificationCode" class="input-text size-L" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="" style="width:150px;">
-            <img src="images/VerifyCode.aspx.png" />
+            <img th:src="@{images/VerifyCode.aspx.png}" />
             <a id="kanbuq" href="javascript:;">看不清，换一张</a>
           </div>
         </div>
@@ -64,12 +64,14 @@
     </div>
   </div>
   <div class="footer">Copyright 你的公司名称 by h-ui.admin.pro.iframe v1.0</div>
-
-  <script type="text/javascript" src="../lib/jquery/1.9.1/jquery.min.js"></script>
-  <script type="text/javascript" src="../static/h-ui/js/H-ui.js"></script>
-  <script type="text/javascript" src="../lib/jquery.validation/1.14.0/jquery.validate.js"></script>
-  <script type="text/javascript" src="../lib/jquery.validation/1.14.0/validate-methods.js"></script>
-  <script type="text/javascript" src="../lib/jquery.validation/1.14.0/messages_zh.js"></script>
+  <script  th:src="@{http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js}" ></script>
+  <script type="text/javascript" th:src="@{/static/lib/html5shiv.js}"></script>
+  <script type="text/javascript" th:src="@{/static/lib/respond.min.js}"></script>
+  <script type="text/javascript" th:src="@{/static/lib/jquery/1.9.1/jquery.min.js}"></script>
+  <script type="text/javascript" th:src="@{/static/h-ui/js/H-ui.js}"></script>
+  <script type="text/javascript" th:src="@{/static/lib/jquery.validation/1.14.0/jquery.validate.js}"></script>
+  <script type="text/javascript" th:src="@{/static/lib/jquery.validation/1.14.0/validate-methods.js}"></script>
+  <script type="text/javascript" th:src="@{/static/lib/jquery.validation/1.14.0/messages_zh.js}"></script>
   <script type="text/javascript">
     $(function(){
       /* 表单验证，提交 */
