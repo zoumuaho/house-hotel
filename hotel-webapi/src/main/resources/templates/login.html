@@ -26,11 +26,11 @@
   <div class="header"></div>
   <div class="loginWraper">
     <div class="loginBox">
-      <form id="form-admin-login" class="form form-horizontal" action="index.html" method="post">
+      <form id="form-admin-login" class="form form-horizontal">
         <div class="row clearfix">
           <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60d;</i></label>
           <div class="form-controls col-xs-7">
-            <input id="adminName" name="adminName" type="text" placeholder="账户" class="input-text size-L">
+            <input id="username" name="username" type="text" placeholder="账户" class="input-text size-L">
           </div>
         </div>
         <div class="row clearfix">
@@ -56,7 +56,7 @@
         </div>
         <div class="row clearfix">
           <div class="form-controls col-xs-8 col-xs-offset-3">
-            <input name="" type="submit" class="btn btn-success radius size-L" value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
+            <input  id ="user-login-btn" onclick="userLogin()" name="" type="button" class="btn btn-success radius size-L" value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
             <input name="" type="reset" class="btn btn-default radius size-L" value="&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;">
           </div>
         </div>
@@ -72,12 +72,14 @@
   <script type="text/javascript" th:src="@{/static/lib/jquery.validation/1.14.0/jquery.validate.js}"></script>
   <script type="text/javascript" th:src="@{/static/lib/jquery.validation/1.14.0/validate-methods.js}"></script>
   <script type="text/javascript" th:src="@{/static/lib/jquery.validation/1.14.0/messages_zh.js}"></script>
+  <script type="text/javascript" th:src="@{/static/lib/layer/3.1.1/layer.js}"></script>
+  <script type="text/javascript" th:src="@{/static/util/ajaxUtil.js}"></script>
   <script type="text/javascript">
     $(function(){
       /* 表单验证，提交 */
       $("#form-admin-login").validate({
         rules: {
-          adminName: {
+          username: {
             required:true,
           },
           password: {
@@ -89,10 +91,10 @@
           }
         },
         messages: {
-          adminName: {
+            username: {
             required: "账户不能为空"
           },
-          adminName: {
+            password: {
             required: "密码不能为空",
             rangelength: "密码长度6到16个字符"
           },
@@ -101,12 +103,18 @@
           },
         },
         onkeyup: false,
-        focusCleanup: false,
-        submitHandler: function(form) {
-          //在这里执行表单提交
-        }
+        focusCleanup: false
       });
     });
+
+    function userLogin() {
+        var userLoginParam = {};
+        userLoginParam.username = $("#username").val();
+        userLoginParam.password = $("#password").val();
+        var json_str = JSON.stringify(userLoginParam);
+
+        http.ajaxLogin('/hotel-api/hotel/user/login',json_str);
+    }
   </script>
 </body>
 </html>

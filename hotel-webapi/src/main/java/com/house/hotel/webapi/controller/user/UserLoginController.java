@@ -1,7 +1,10 @@
 package com.house.hotel.webapi.controller.user;
 
 import com.house.hotel.commutil.api.BaseResult;
+import com.house.hotel.commutil.api.CookieUtil;
+import com.house.hotel.commutil.enums.RedisEnum;
 import com.house.hotel.dto.user.param.UserLoginParam;
+import com.house.hotel.service.RedisService;
 import com.house.hotel.service.user.UserAdminService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @auhtor muhao.zou
@@ -26,6 +31,8 @@ public class UserLoginController {
 
     @Autowired
     private UserAdminService userAdminService;
+    @Autowired
+    private RedisService redisService;
     @Value("${jwt.tokenHeader}")
     private String tokenHeader;
     @Value("${jwt.tokenHead}")
@@ -33,14 +40,18 @@ public class UserLoginController {
 
     @ApiOperation("用户登录")
     @PostMapping(value = "/login")
-    public BaseResult userLogin(@RequestBody UserLoginParam userLoginParam) {
+    public BaseResult userLogin(@RequestBody UserLoginParam userLoginParam ,HttpServletResponse response) {
         String token = userAdminService.login(userLoginParam.getUsername(), userLoginParam.getPassword());
         if (token == null) {
             return BaseResult.validateFailed("用户名或密码错误");
         }
-        Map<String, String> tokenMap = new HashMap<>();
-        tokenMap.put("token", token);
-        tokenMap.put("tokenHead", tokenHead);
-        return BaseResult.success(tokenMap);
+        //将token保存至redis
+        redisService.set(tokenHeader, token, RedisEnum.USER_LOGIN.getEXPIRE());
+
+        //3. 设置token至cookie
+        CookieUtil.set(response, tokenHeader, token, RedisEnum.USER_LOGIN.getEXPIRE());
+
+
+        return BaseResult.success(null);
     }
 }

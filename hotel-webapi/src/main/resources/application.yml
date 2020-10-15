@@ -37,7 +37,7 @@ spring:
     static-path-pattern: /static/**
     view:
       prefix: /templates/
-      suffix: .ftl
+      suffix: .html
   redis:
     database: 0
     host: 47.100.168.157
