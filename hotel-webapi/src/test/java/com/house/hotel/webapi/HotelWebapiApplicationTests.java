@@ -2,6 +2,7 @@ package com.house.hotel.webapi;
 
 import com.house.hotel.dao.entity.HotelUserInfo;
 import com.house.hotel.dao.mapper.HotelUserInfoMapper;
+import com.house.hotel.service.RedisService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ class HotelWebapiApplicationTests {
 	HotelUserInfoMapper hotelUserInfoMapper;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private RedisService redisService;
 	@Test
 	void contextLoads() {
 		List<HotelUserInfo> hotelUserInfoList =  hotelUserInfoMapper.selectAll();
@@ -30,5 +33,9 @@ class HotelWebapiApplicationTests {
 	@Test
 	void encode(){
 		System.out.println(passwordEncoder.encode("123456"));
+	}
+	@Test
+	void testRedis(){
+		System.out.println(redisService.get("aa"));
 	}
 }
