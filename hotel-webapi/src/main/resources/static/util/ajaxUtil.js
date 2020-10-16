@@ -43,13 +43,21 @@ http.ajaxLogin = function (url, data) {
         type: "post",
         data: data,
         dataType: "json",
+        async: false,
         contentType: "application/json;charset=UTF-8",
         beforeSend: function () {
             index = layer.load(1, {shade: [0.3, '#000']})
         },
         success: function (res) {
+            if(res.code == "200"){
+                layer.msg(res.message,{icon:1,time:1000},function () {
+                    window.location.href = "/hotel-api/hotel/user/index";
+                });
+            }else{
+                layer.msg(res.message,{icon:2,time:2000});
+            }
             console.log(res);
-            window.location.href = "/hotel-api/hotel/user/index";
+
         },
         error: function () {
             layer.msg('请求出错！', {icon:1,time:1000});

@@ -39,7 +39,7 @@ public class UserLoginController {
     private String tokenHead;
 
     @ApiOperation("用户登录")
-    @PostMapping(value = "/login")
+    @RequestMapping(value = "/login")
     public BaseResult userLogin(@RequestBody UserLoginParam userLoginParam ,HttpServletResponse response) {
         String token = userAdminService.login(userLoginParam.getUsername(), userLoginParam.getPassword());
         if (token == null) {
@@ -51,7 +51,13 @@ public class UserLoginController {
         //3. 设置token至cookie
         CookieUtil.set(response, tokenHeader, token, RedisEnum.USER_LOGIN.getEXPIRE());
 
-
+        return BaseResult.success(null);
+    }
+    @ApiOperation("退出登录")
+    @RequestMapping("/logout")
+    public BaseResult loginOut(){
+        //移除redis中token
+        redisService.del(this.tokenHeader);
         return BaseResult.success(null);
     }
 }
