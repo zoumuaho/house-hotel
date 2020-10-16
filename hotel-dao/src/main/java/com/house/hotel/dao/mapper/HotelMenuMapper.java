@@ -14,4 +14,11 @@ public interface HotelMenuMapper extends BaseMapper<HotelMenu> {
      * @return
      */
     List<HotelMenuConverterModel> getAllMenusWithRole();
+
+    /**
+     * 根据用户Id查询菜单列表
+     * @param userId yon
+     * @return
+     */
+    List<HotelMenu> getMenuByUserId(Integer userId);
 }

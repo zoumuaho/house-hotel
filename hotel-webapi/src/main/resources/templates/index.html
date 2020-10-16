@@ -1,6 +1,7 @@
 ﻿<!--_meta 作为公共模版分离出去-->
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+<html xmlns:th="http://www.thymeleaf.org" lang="zh"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="utf-8">
   <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -22,9 +23,7 @@
   <![endif]-->
   <!--/meta 作为公共模版分离出去-->
 
-  <title>h-ui.admin.pro v1.0</title>
-  <meta name="keywords" content="h-ui.admin.pro v1.0,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
-  <meta name="description" content="h-ui.admin.pro v1.0，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
+  <title>hotel-system</title>
 </head>
 <body>
 
@@ -33,7 +32,7 @@
     <div class="Hui-admin-logo-wrapper">
       <a class="logo navbar-logo" href="/aboutHui.shtml">
         <i class="va-m iconpic global-logo"></i>
-        <span class="va-m">H-ui.admin</span>
+        <span class="va-m" sec:authentication="principal.authorities">H-ui.admin</span>
       </a>
     </div>
     <div class="Hui-admin-menu-dropdown bk_2">
@@ -72,8 +71,8 @@
           </nav>
           <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar">
             <ul class="clearfix">
-              <li>超级管理员</li>
-              <li class="dropDown dropDown_hover"> <a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
+              <li sec:authentication="principal.authorities">超级管理员</li>
+              <li class="dropDown dropDown_hover"> <a href="#" class="dropDown_A" sec:authentication="principal.username">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
                 <ul class="dropDown-menu menu radius box-shadow">
                   <li><a href="javascript:;" onClick="myselfinfo()">个人信息</a></li>
                   <li><a href="#">切换账户</a></li>

@@ -183,7 +183,7 @@ public class HotelUserInfoConverterModel implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>(roleList.size());
         for (HotelRole role : roleList) {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
+            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
         }
         return authorities;
     }
