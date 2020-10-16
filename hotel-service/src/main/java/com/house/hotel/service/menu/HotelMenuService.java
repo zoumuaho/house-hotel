@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author muhao.zou
@@ -24,9 +25,27 @@ public class HotelMenuService {
     }
 
 
-    public List<HotelMenuModel> getMenuByUserId() {
-        List<HotelMenuModel> list = new ArrayList<>();
-        return list;
+    public List<HotelMenuModel> getMenuByUserId(Long userId) {
+        List<HotelMenu> hotelMenus =  hotelMenuMapper.getMenuByUserId(userId);
+        List<HotelMenuModel> result = hotelMenus.stream()
+                .filter(menu -> menu.getParentId().equals(0))
+                .map(menu -> covertMenuNode(menu, hotelMenus)).collect(Collectors.toList());
+
+        return result;
+    }
+
+    private HotelMenuModel covertMenuNode(HotelMenu menu, List<HotelMenu> menuList) {
+        HotelMenuModel node = new HotelMenuModel();
+        node.setParentLinkId(menu.getParentId());
+        node.setName(menu.getName());
+        node.setLinkPath(menu.getPath());
+        node.setIcon(menu.getIconcls());
+        node.setId(menu.getId());
+        List<HotelMenuModel> children = menuList.stream()
+                .filter(subMenu -> subMenu.getParentId().equals(menu.getId()))
+                .map(subMenu -> covertMenuNode(subMenu, menuList)).collect(Collectors.toList());
+        node.setSubMenus(children);
+        return node;
     }
 
 }

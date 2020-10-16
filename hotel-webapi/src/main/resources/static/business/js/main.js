@@ -1,8 +1,8 @@
 /* 这里面是整个系统业务相关的js代码 */
 
-function getMenu() {
+function getMenu(menuData) {
 	// 可以服务端获取数据
-	var menuData = [
+	/*var menuData = [
 		{
       id: '1',
       name: '首页',
@@ -280,11 +280,11 @@ function getMenu() {
         },
       ]
     },
-  ];
+  ];*/
   var pid = new Array;
   var pathname = window.location.pathname;
   recursion(menuData);
-  
+
   function recursion(menuData) {
     if(menuData && menuData.length > 0) {
       for (var i in menuData) {

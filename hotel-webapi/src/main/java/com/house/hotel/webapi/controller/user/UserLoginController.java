@@ -46,18 +46,21 @@ public class UserLoginController {
             return BaseResult.validateFailed("用户名或密码错误");
         }
         //将token保存至redis
-        redisService.set(tokenHeader, token, RedisEnum.USER_LOGIN.getEXPIRE());
+        redisService.set(this.tokenHeader, token, RedisEnum.USER_LOGIN.getEXPIRE());
 
         //3. 设置token至cookie
-        CookieUtil.set(response, tokenHeader, token, RedisEnum.USER_LOGIN.getEXPIRE());
+        CookieUtil.set(response, this.tokenHeader, token, RedisEnum.USER_LOGIN.getEXPIRE());
 
         return BaseResult.success(null);
     }
     @ApiOperation("退出登录")
     @RequestMapping("/logout")
-    public BaseResult loginOut(){
+    public BaseResult loginOut(HttpServletResponse response){
         //移除redis中token
         redisService.del(this.tokenHeader);
+
+        //3. 清除cookie
+        CookieUtil.set(response, this.tokenHeader, null, 0);
         return BaseResult.success(null);
     }
 }

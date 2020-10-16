@@ -55,7 +55,7 @@
 	    hotel_user_role hrr,
 	    hotel_menu_role mr
     WHERE
-	    hrr.user_id =1
+	    hrr.user_id =#{userId}
 	    and hrr.role_id=mr.role_id and mr.menu_id=m1.id and m1.`disabled`=1
   </select>
 </mapper>

@@ -20,5 +20,5 @@ public interface HotelMenuMapper extends BaseMapper<HotelMenu> {
      * @param userId yon
      * @return
      */
-    List<HotelMenu> getMenuByUserId(Integer userId);
+    List<HotelMenu> getMenuByUserId(Long userId);
 }
