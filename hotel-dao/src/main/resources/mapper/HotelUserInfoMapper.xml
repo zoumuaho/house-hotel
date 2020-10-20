@@ -9,8 +9,8 @@
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="user_account" jdbcType="VARCHAR" property="userAccount" />
     <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="store_id" jdbcType="VARCHAR" property="storeId" />
-    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="INTEGER" property="email" />
     <result column="disabled" jdbcType="BIT" property="disabled" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />

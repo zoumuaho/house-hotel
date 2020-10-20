@@ -31,28 +31,19 @@ public class HotelUserInfoModel implements Serializable {
      */
     @ApiModelProperty(value = "账号")
     private String userAccount;
-    /**
-     * 账户类型
-     */
-    @ApiModelProperty(value = "账户类型 1超级管理员 2门店管理员")
-    private Integer accountType;
-    /**
-     * 密码
-     */
-    @ApiModelProperty(value = "密码")
-    private String password;
+    @ApiModelProperty(value = "角色名称")
+    private String roleName;
 
     /**
-     * 所属门店
+     * 手机号码
      */
-    @ApiModelProperty(value = "所属门店")
-    private String storeId;
-
+    @ApiModelProperty(value = "手机号码")
+    private String phone;
     /**
-     * 角色
+     * 电子邮箱
      */
-    @ApiModelProperty(value = "角色")
-    private Integer roleId;
+    @ApiModelProperty(value = "电子邮箱")
+    private String email;
 
     /**
      * 是否有效 0无效 1有效
@@ -77,7 +68,6 @@ public class HotelUserInfoModel implements Serializable {
      */
     @ApiModelProperty(value = "修改日期")
     private Date modifyDate;
-
 
     public Long getUserId() {
         return userId;
@@ -106,39 +96,30 @@ public class HotelUserInfoModel implements Serializable {
         return this;
     }
 
-    public Integer getAccountType() {
-        return accountType;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public HotelUserInfoModel setAccountType(Integer accountType) {
-        this.accountType = accountType;
+    public HotelUserInfoModel setRoleName(String roleName) {
+        this.roleName = roleName;
         return this;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPhone() {
+        return phone;
     }
 
-    public HotelUserInfoModel setPassword(String password) {
-        this.password = password;
+    public HotelUserInfoModel setPhone(String phone) {
+        this.phone = phone;
         return this;
     }
 
-    public String getStoreId() {
-        return storeId;
+    public String getEmail() {
+        return email;
     }
 
-    public HotelUserInfoModel setStoreId(String storeId) {
-        this.storeId = storeId;
-        return this;
-    }
-
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public HotelUserInfoModel setRoleId(Integer roleId) {
-        this.roleId = roleId;
+    public HotelUserInfoModel setEmail(String email) {
+        this.email = email;
         return this;
     }
 
@@ -178,20 +159,5 @@ public class HotelUserInfoModel implements Serializable {
         return this;
     }
 
-    @Override
-    public String toString() {
-        return "HotelUserInfoModel{" +
-                "userId=" + userId +
-                ", userName='" + userName + '\'' +
-                ", userAccount='" + userAccount + '\'' +
-                ", accountType=" + accountType +
-                ", password='" + password + '\'' +
-                ", storeId='" + storeId + '\'' +
-                ", roleId=" + roleId +
-                ", disabled=" + disabled +
-                ", remark='" + remark + '\'' +
-                ", createDate=" + createDate +
-                ", modifyDate=" + modifyDate +
-                '}';
-    }
+
 }

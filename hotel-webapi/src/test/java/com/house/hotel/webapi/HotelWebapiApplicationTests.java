@@ -1,10 +1,10 @@
 package com.house.hotel.webapi;
 
-import com.house.hotel.dao.entity.HotelUserInfo;
-import com.house.hotel.dao.mapper.HotelUserInfoMapper;
 import com.house.hotel.dto.user.model.HotelMenuModel;
+import com.house.hotel.dto.user.model.HotelUserInfoModel;
 import com.house.hotel.service.RedisService;
 import com.house.hotel.service.menu.HotelMenuService;
+import com.house.hotel.service.user.HotelUserInfoQueryService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +13,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = HotelWebapiApplication.class)
 class HotelWebapiApplicationTests {
 	@Autowired
-	HotelUserInfoMapper hotelUserInfoMapper;
+	HotelUserInfoQueryService hotelUserInfoQueryService;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	@Autowired
@@ -30,7 +28,7 @@ class HotelWebapiApplicationTests {
 	private HotelMenuService hotelMenuService;
 	@Test
 	void contextLoads() {
-		List<HotelUserInfo> hotelUserInfoList =  hotelUserInfoMapper.selectAll();
+		List<HotelUserInfoModel> hotelUserInfoList =  hotelUserInfoQueryService.listHotelUserInfo();
 		hotelUserInfoList.forEach(v->{
 			System.out.println(v.getUserName());
 		});
@@ -41,7 +39,7 @@ class HotelWebapiApplicationTests {
 	}
 	@Test
 	void testRedis(){
-		System.out.println(redisService.get("aa"));
+		System.out.println(redisService.del("menu_1"));
 	}
 
 	@Test

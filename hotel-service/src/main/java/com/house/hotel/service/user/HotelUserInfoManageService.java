@@ -24,7 +24,6 @@ public class HotelUserInfoManageService {
         HotelUserInfo hotelUserInfo = new HotelUserInfo();
         hotelUserInfo.setUserName(registerParam.getUserName())
                 .setUserAccount(registerParam.getUserAccount())
-                .setAccountType(registerParam.getAccountType())
                 .setPassword(passwordEncoder.encode(registerParam.getPassword()))
                 .setCreateDate(new Date())
                 .setModifyDate(new Date())

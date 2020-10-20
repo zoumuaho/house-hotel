@@ -24,27 +24,17 @@ public class HotelUserInfo {
     @Column(name = "user_account")
     private String userAccount;
     /**
-     * 账户类型 1超级管理员 2门店管理员
-     */
-    @Column(name = "account_type")
-    private Integer accountType;
-    /**
      * 密码
      */
     private String password;
-
     /**
-     * 所属门店
+     * 手机号码
      */
-    @Column(name = "store_id")
-    private String storeId;
-
+    private String phone;
     /**
-     * 角色
+     * 电子邮箱
      */
-    @Column(name = "role_id")
-    private Integer roleId;
-
+    private String email;
     /**
      * 是否有效 0无效 1有效
      */
@@ -94,14 +84,7 @@ public class HotelUserInfo {
         return this;
     }
 
-    public Integer getAccountType() {
-        return accountType;
-    }
 
-    public HotelUserInfo setAccountType(Integer accountType) {
-        this.accountType = accountType;
-        return this;
-    }
 
     public String getPassword() {
         return password;
@@ -112,21 +95,21 @@ public class HotelUserInfo {
         return this;
     }
 
-    public String getStoreId() {
-        return storeId;
+    public String getPhone() {
+        return phone;
     }
 
-    public HotelUserInfo setStoreId(String storeId) {
-        this.storeId = storeId;
+    public HotelUserInfo setPhone(String phone) {
+        this.phone = phone;
         return this;
     }
 
-    public Integer getRoleId() {
-        return roleId;
+    public String getEmail() {
+        return email;
     }
 
-    public HotelUserInfo setRoleId(Integer roleId) {
-        this.roleId = roleId;
+    public HotelUserInfo setEmail(String email) {
+        this.email = email;
         return this;
     }
 

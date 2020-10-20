@@ -25,10 +25,10 @@ public class HotelRole {
     /**
      * 是否有效 0无效 1有效
      */
-    private Boolean disabled;
+    private Integer disabled;
 
-    @Column(name = "create_dare")
-    private Date createDare;
+    @Column(name = "create_date")
+    private Date createDate;
 
     @Column(name = "modify_date")
     private Date modifyDate;
@@ -102,7 +102,7 @@ public class HotelRole {
      *
      * @return disabled - 是否有效 0无效 1有效
      */
-    public Boolean getDisabled() {
+    public Integer getDisabled() {
         return disabled;
     }
 
@@ -111,22 +111,22 @@ public class HotelRole {
      *
      * @param disabled 是否有效 0无效 1有效
      */
-    public void setDisabled(Boolean disabled) {
+    public void setDisabled(Integer disabled) {
         this.disabled = disabled;
     }
 
     /**
-     * @return create_dare
+     * @return create_date
      */
-    public Date getCreateDare() {
-        return createDare;
+    public Date getCreateDate() {
+        return createDate;
     }
 
     /**
-     * @param createDare
+     * @param createDate
      */
-    public void setCreateDare(Date createDare) {
-        this.createDare = createDare;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     /**

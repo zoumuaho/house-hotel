@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -14,8 +15,9 @@ import java.util.List;
  * @author muhao.zou
  * @date 2020/9/30 17:28
  */
-public class HotelUserInfoConverterModel implements UserDetails {
+public class HotelUserInfoConverterModel implements UserDetails, Serializable {
 
+    private static final long serialVersionUID = -3354673133900759667L;
     /**
      * 主键ID
      */
@@ -30,24 +32,19 @@ public class HotelUserInfoConverterModel implements UserDetails {
      * 账号
      */
     private String userAccount;
-    /**
-     * 账户类型 1超级管理员 2门店管理员
-     */
-    private Integer accountType;
+
     /**
      * 密码
      */
     private String password;
-
     /**
-     * 所属门店
+     * 手机号码
      */
-    private String storeId;
-
+    private String phone;
     /**
-     * 角色
+     * 电子邮箱
      */
-    private Integer roleId;
+    private String email;
 
     /**
      * 是否有效 0无效 1有效
@@ -98,14 +95,7 @@ public class HotelUserInfoConverterModel implements UserDetails {
         return this;
     }
 
-    public Integer getAccountType() {
-        return accountType;
-    }
 
-    public HotelUserInfoConverterModel setAccountType(Integer accountType) {
-        this.accountType = accountType;
-        return this;
-    }
 
     public String getPassword() {
         return password;
@@ -116,21 +106,21 @@ public class HotelUserInfoConverterModel implements UserDetails {
         return this;
     }
 
-    public String getStoreId() {
-        return storeId;
+    public String getPhone() {
+        return phone;
     }
 
-    public HotelUserInfoConverterModel setStoreId(String storeId) {
-        this.storeId = storeId;
+    public HotelUserInfoConverterModel setPhone(String phone) {
+        this.phone = phone;
         return this;
     }
 
-    public Integer getRoleId() {
-        return roleId;
+    public String getEmail() {
+        return email;
     }
 
-    public HotelUserInfoConverterModel setRoleId(Integer roleId) {
-        this.roleId = roleId;
+    public HotelUserInfoConverterModel setEmail(String email) {
+        this.email = email;
         return this;
     }
 

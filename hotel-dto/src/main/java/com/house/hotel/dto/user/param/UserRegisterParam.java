@@ -2,6 +2,7 @@ package com.house.hotel.dto.user.param;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.models.auth.In;
 
 
 import javax.validation.constraints.NotEmpty;
@@ -15,26 +16,21 @@ import java.io.Serializable;
 public class UserRegisterParam implements Serializable {
 
     private static final long serialVersionUID = -806842181049490814L;
+
+    @ApiModelProperty(value = "用户ID")
+    private Integer userId;
     /**
      * 姓名
      */
     @ApiModelProperty(value = "姓名")
     @NotEmpty(message = "姓名不能为空")
     private String userName;
-
     /**
      * 账号
      */
     @ApiModelProperty(value = "账号")
     @NotEmpty(message = "账号不能为空")
     private String userAccount;
-
-    /**
-     * 账户类型 1超级管理员 2管理员
-     */
-    @ApiModelProperty(value = "账户类型 1超级管理员 2管理员")
-    private Integer accountType;
-
     /**
      * 密码
      */
@@ -43,16 +39,23 @@ public class UserRegisterParam implements Serializable {
     private String password;
 
     /**
-     * 所属门店
-     */
-    @ApiModelProperty(value = "所属门店id")
-    private String storeId;
-
-    /**
      * 角色
      */
     @ApiModelProperty(value = "角色id")
     private Integer roleId;
+    @ApiModelProperty(value = "手机号码")
+    private String phone;
+    @ApiModelProperty(value = "电子邮箱")
+    private String email;
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public UserRegisterParam setUserId(Integer userId) {
+        this.userId = userId;
+        return this;
+    }
 
     public String getUserName() {
         return userName;
@@ -72,15 +75,6 @@ public class UserRegisterParam implements Serializable {
         return this;
     }
 
-    public Integer getAccountType() {
-        return accountType;
-    }
-
-    public UserRegisterParam setAccountType(Integer accountType) {
-        this.accountType = accountType;
-        return this;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -90,21 +84,30 @@ public class UserRegisterParam implements Serializable {
         return this;
     }
 
-    public String getStoreId() {
-        return storeId;
-    }
-
-    public UserRegisterParam setStoreId(String storeId) {
-        this.storeId = storeId;
-        return this;
-    }
-
     public Integer getRoleId() {
         return roleId;
     }
 
     public UserRegisterParam setRoleId(Integer roleId) {
         this.roleId = roleId;
+        return this;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public UserRegisterParam setPhone(String phone) {
+        this.phone = phone;
+        return this;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public UserRegisterParam setEmail(String email) {
+        this.email = email;
         return this;
     }
 }
