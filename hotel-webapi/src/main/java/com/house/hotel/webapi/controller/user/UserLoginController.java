@@ -39,7 +39,7 @@ public class UserLoginController {
     private String tokenHead;
 
     @ApiOperation("用户登录")
-    @RequestMapping(value = "/login")
+    @PostMapping(value = "/login")
     public BaseResult userLogin(@RequestBody UserLoginParam userLoginParam ,HttpServletResponse response) {
         String token = userAdminService.login(userLoginParam.getUsername(), userLoginParam.getPassword());
         if (token == null) {
@@ -54,7 +54,7 @@ public class UserLoginController {
         return BaseResult.success(null);
     }
     @ApiOperation("退出登录")
-    @RequestMapping("/logout")
+    @PostMapping("/logout")
     public BaseResult loginOut(HttpServletResponse response){
         //移除redis中token
         redisService.del(this.tokenHeader);
