@@ -10,6 +10,7 @@ public class HotelUserInfo {
      */
     @Id
     @Column(name = "user_id")
+    @GeneratedValue(generator = "JDBC")
     private Long userId;
 
     /**

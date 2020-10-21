@@ -18,7 +18,7 @@ public class UserRegisterParam implements Serializable {
     private static final long serialVersionUID = -806842181049490814L;
 
     @ApiModelProperty(value = "用户ID")
-    private Integer userId;
+    private Long userId;
     /**
      * 姓名
      */
@@ -47,12 +47,14 @@ public class UserRegisterParam implements Serializable {
     private String phone;
     @ApiModelProperty(value = "电子邮箱")
     private String email;
+    @ApiModelProperty
+    private String remark;
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public UserRegisterParam setUserId(Integer userId) {
+    public UserRegisterParam setUserId(Long userId) {
         this.userId = userId;
         return this;
     }
@@ -108,6 +110,15 @@ public class UserRegisterParam implements Serializable {
 
     public UserRegisterParam setEmail(String email) {
         this.email = email;
+        return this;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public UserRegisterParam setRemark(String remark) {
+        this.remark = remark;
         return this;
     }
 }

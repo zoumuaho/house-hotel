@@ -6,6 +6,8 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Lists;
 import com.house.hotel.commutil.constant.StatusConstant;
+import com.house.hotel.commutil.enums.HotelUserOperationEnum;
+import com.house.hotel.commutil.exception.HotelOperationException;
 import com.house.hotel.dao.entity.HotelRole;
 import com.house.hotel.dao.entity.HotelUserInfo;
 import com.house.hotel.dao.entity.HotelUserRole;
@@ -15,13 +17,17 @@ import com.house.hotel.dao.mapper.HotelUserRoleMapper;
 import com.house.hotel.dao.model.HotelUserInfoConverterModel;
 import com.house.hotel.dto.user.model.HotelRoleModel;
 import com.house.hotel.dto.user.model.HotelUserInfoModel;
+import com.house.hotel.dto.user.param.UserRegisterParam;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,6 +43,8 @@ public class HotelUserInfoQueryService {
     private HotelUserRoleMapper hotelUserRoleMapper;
     @Autowired
     private HotelRoleMapper hotelRoleMapper;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public HotelUserInfoConverterModel loadUserByUsername(String userName) {
         HotelUserInfoConverterModel hotelUserInfoModel = new HotelUserInfoConverterModel();
@@ -85,6 +93,7 @@ public class HotelUserInfoQueryService {
 
     /**
      * 查询角色信息列表
+     *
      * @return
      */
     public List<HotelRoleModel> listHotelRole() {
@@ -102,6 +111,48 @@ public class HotelUserInfoQueryService {
             hotelRoleModelList.add(hotelRoleModel);
         });
         return hotelRoleModelList;
+    }
+
+    /**
+     * 保存用户信息
+     *
+     * @param userInfoParam 入参
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public int saveUser(UserRegisterParam userInfoParam) {
+        HotelUserInfo hotelUserInfo = this.transferHotelUserInfo(userInfoParam);
+
+        int userId = hotelUserInfoMapper.insertUseGeneratedKeys(hotelUserInfo);
+        if (userId < 0) {
+            throw new HotelOperationException(HotelUserOperationEnum.SAVE_USER_EXCEPTION);
+        }
+        HotelUserRole hotelUserRole = this.transferHotelUserRole(userInfoParam,hotelUserInfo.getUserId().intValue());
+        return hotelUserRoleMapper.insertSelective(hotelUserRole);
+    }
+
+    /**
+     * 修改用户信息
+     * @param userInfoParam
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public int modifyUser(UserRegisterParam userInfoParam) {
+        if (userInfoParam.getUserId() < 0 || userInfoParam.getUserId() == null) {
+            throw new HotelOperationException(HotelUserOperationEnum.SAVE_USER_PARAM_NOT_EXIST);
+        }
+        HotelUserInfo hotelUserInfo = this.transferHotelUserInfo(userInfoParam);
+        hotelUserInfo.setUserId(userInfoParam.getUserId());
+
+        int count = hotelUserInfoMapper.updateByPrimaryKeySelective(hotelUserInfo);
+
+        if (count < 0) {
+            throw new HotelOperationException(HotelUserOperationEnum.SAVE_USER_EXCEPTION);
+        }
+        HotelUserRole hotelUserRole = this.transferHotelUserRole(userInfoParam,userInfoParam.getUserId().intValue());
+        Example example = new Example(HotelUserRole.class);
+        example.createCriteria().andEqualTo("userId",userInfoParam.getUserId());
+        return hotelUserRoleMapper.updateByExample(hotelUserRole,example);
     }
 
     /**
@@ -134,6 +185,34 @@ public class HotelUserInfoQueryService {
             return Lists.newArrayList();
         }
         return hotelRoleList;
+    }
+
+
+    private HotelUserInfo transferHotelUserInfo(UserRegisterParam userInfoParam) {
+        HotelUserInfo hotelUserInfo = new HotelUserInfo();
+        hotelUserInfo.setUserName(userInfoParam.getUserName());
+        hotelUserInfo.setUserAccount(userInfoParam.getUserAccount());
+        hotelUserInfo.setPassword(passwordEncoder.encode(userInfoParam.getPassword()));
+        hotelUserInfo.setPhone(userInfoParam.getPhone());
+        hotelUserInfo.setEmail(userInfoParam.getEmail());
+        hotelUserInfo.setRemark(userInfoParam.getRemark());
+        hotelUserInfo.setCreateDate(new Date());
+        hotelUserInfo.setModifyDate(new Date());
+        hotelUserInfo.setDisabled(StatusConstant.EFFECTIVE);
+        return hotelUserInfo;
+    }
+
+    private HotelUserRole transferHotelUserRole(UserRegisterParam userInfoParam,Integer... userId) {
+        HotelUserRole hotelUserRole = new HotelUserRole();
+        if(userId.length >0 && userId != null){
+            hotelUserRole.setUserId(userId[0]);
+        }
+        hotelUserRole.setRoleId(userInfoParam.getRoleId());
+        hotelUserRole.setCreateDate(new Date());
+        hotelUserRole.setModifyDate(new Date());
+        hotelUserRole.setDisabled(StatusConstant.EFFECTIVE);
+        hotelUserRole.setRemark("");
+        return hotelUserRole;
     }
 
 }

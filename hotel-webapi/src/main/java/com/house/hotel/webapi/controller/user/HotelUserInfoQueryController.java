@@ -10,10 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -37,16 +34,30 @@ public class HotelUserInfoQueryController {
         return new ModelAndView("admin-list", "userInfoModelList", userInfoModelList);
     }
 
-    @RequestMapping(value = "/admin-add-page")
+    @GetMapping(value = "/admin-add-page")
     public ModelAndView toAddUserPage() {
         List<HotelRoleModel> hotelRoleModelList = hotelUserInfoService.listHotelRole();
         return new ModelAndView("admin-add", "roleList", hotelRoleModelList);
     }
     @ApiOperation(value = "添加用户")
-    @RequestMapping(value = "/admin-add")
+    @PostMapping(value = "/admin-add")
     @ResponseBody
     public BaseResult addUser(@ApiParam @RequestBody UserRegisterParam userInfoParam) {
+        int count = hotelUserInfoService.saveUser(userInfoParam);
+        if(count > 0){
+            return BaseResult.success(count);
+        }
+        return BaseResult.failed();
+    }
 
-        return BaseResult.success(null);
+    @ApiOperation(value = "修改用户")
+    @PostMapping(value = "/admin-modify")
+    @ResponseBody
+    public BaseResult modifyUser(@ApiParam @RequestBody UserRegisterParam userInfoParam) {
+        int count = hotelUserInfoService.modifyUser(userInfoParam);
+        if(count > 0){
+            return BaseResult.success(count);
+        }
+        return BaseResult.failed();
     }
 }

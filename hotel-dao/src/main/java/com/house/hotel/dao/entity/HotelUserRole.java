@@ -1,5 +1,7 @@
 package com.house.hotel.dao.entity;
 
+import io.swagger.models.auth.In;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -27,7 +29,7 @@ public class HotelUserRole {
     /**
      * 是否有效 0无效 1有效
      */
-    private Boolean disabled;
+    private Integer disabled;
 
     /**
      * 备注
@@ -99,7 +101,7 @@ public class HotelUserRole {
      *
      * @return disabled - 是否有效 0无效 1有效
      */
-    public Boolean getDisabled() {
+    public Integer getDisabled() {
         return disabled;
     }
 
@@ -108,7 +110,7 @@ public class HotelUserRole {
      *
      * @param disabled 是否有效 0无效 1有效
      */
-    public void setDisabled(Boolean disabled) {
+    public void setDisabled(Integer disabled) {
         this.disabled = disabled;
     }
 
