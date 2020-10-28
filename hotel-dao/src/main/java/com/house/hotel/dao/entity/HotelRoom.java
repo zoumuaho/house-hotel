@@ -1,5 +1,4 @@
 package com.house.hotel.dao.entity;
-
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -12,7 +11,7 @@ public class HotelRoom {
      */
     @Id
     @Column(name = "room_id")
-    private Integer roomId;
+    private Long roomId;
 
     /**
      * 房间编号
@@ -23,8 +22,8 @@ public class HotelRoom {
     /**
      * 房间楼层
      */
-    @Column(name = "romm_floor")
-    private String rommFloor;
+    @Column(name = "room_floor")
+    private String roomFloor;
 
     /**
      * 所属门店
@@ -36,12 +35,12 @@ public class HotelRoom {
      * 房间类型 1日租房 2长租房
      */
     @Column(name = "room_type")
-    private Boolean roomType;
+    private Integer roomType;
 
     /**
      * 是否有效 1有效 0无效
      */
-    private Boolean disabled;
+    private Integer disabled;
 
     /**
      * 备注信息
@@ -65,7 +64,7 @@ public class HotelRoom {
      *
      * @return room_id - 主键ID
      */
-    public Integer getRoomId() {
+    public Long getRoomId() {
         return roomId;
     }
 
@@ -74,7 +73,7 @@ public class HotelRoom {
      *
      * @param roomId 主键ID
      */
-    public void setRoomId(Integer roomId) {
+    public void setRoomId(Long roomId) {
         this.roomId = roomId;
     }
 
@@ -101,17 +100,17 @@ public class HotelRoom {
      *
      * @return romm_floor - 房间楼层
      */
-    public String getRommFloor() {
-        return rommFloor;
+    public String getRoomFloor() {
+        return roomFloor;
     }
 
     /**
      * 设置房间楼层
      *
-     * @param rommFloor 房间楼层
+     * @param roomFloor 房间楼层
      */
-    public void setRommFloor(String rommFloor) {
-        this.rommFloor = rommFloor;
+    public void setRoomFloor(String roomFloor) {
+        this.roomFloor = roomFloor;
     }
 
     /**
@@ -137,7 +136,7 @@ public class HotelRoom {
      *
      * @return room_type - 房间类型 1日租房 2长租房
      */
-    public Boolean getRoomType() {
+    public Integer getRoomType() {
         return roomType;
     }
 
@@ -146,7 +145,7 @@ public class HotelRoom {
      *
      * @param roomType 房间类型 1日租房 2长租房
      */
-    public void setRoomType(Boolean roomType) {
+    public void setRoomType(Integer roomType) {
         this.roomType = roomType;
     }
 
@@ -155,7 +154,7 @@ public class HotelRoom {
      *
      * @return disabled - 是否有效 1有效 0无效
      */
-    public Boolean getDisabled() {
+    public Integer getDisabled() {
         return disabled;
     }
 
@@ -164,7 +163,7 @@ public class HotelRoom {
      *
      * @param disabled 是否有效 1有效 0无效
      */
-    public void setDisabled(Boolean disabled) {
+    public void setDisabled(Integer disabled) {
         this.disabled = disabled;
     }
 
