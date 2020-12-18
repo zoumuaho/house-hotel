@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE HTML>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
 <head>
 	<meta charset="utf-8">
 	<meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -7,20 +7,17 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 	<meta http-equiv="Cache-Control" content="no-siteapp" />
 	<!--[if lt IE 9]>
-	<script type="text/javascript" src="lib/html5shiv.js"></script>
-	<script type="text/javascript" src="lib/respond.min.js"></script>
 	<![endif]-->
-	<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.css" />
-	<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.9/iconfont.css" />
-	<link rel="stylesheet" type="text/css" href="static/business/css/style.css" />
+	<link rel="stylesheet" type="text/css" th:href="@{~/hotel-api/static/h-ui/css/H-ui.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{~/hotel-api/static/lib/Hui-iconfont/1.0.9/iconfont.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{~/hotel-api/static/business/css/style.css}" />
 	<!--[if IE 6]>
-	<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 	<script>DD_belatedPNG.fix('*');</script>
 	<![endif]-->
 	<title>我的桌面</title>
 	</head>
 <body>
-	<div class="wap-container">
+	<div class="wap-container" th:fragment="commm_welcome">
 		<article class="Hui-admin-content clearfix">
 			<div class="row-24 clearfix" style="margin-left: -12px; margin-right: -12px;">
 				<div class="col-24-xs-24 col-24-sm-12 col-24-md-12 col-24-lg-12 col-24-xl-6" style="padding-left: 12px; padding-right: 12px; margin-bottom: 24px;">
@@ -184,11 +181,9 @@
 			<p>感谢jQuery、layer、laypage、Validform、UEditor、iconfont、Datatables、WebUploaded、icheck、highcharts、bootstrap-Switch<br> Copyright &copy;2015 h-ui.admin.pro v1.0 All Rights Reserved.<br> 本后台系统由<a href="http://www.h-ui.net/" target="_blank" title="H-ui前端框架">H-ui前端框架</a>提供前端技术支持</p>
 		</footer>
 	</div>
-	<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
-	<script type="text/javascript" src="lib/layer/3.1.1/layer.js"></script>
-	<script type="text/javascript" src="static/h-ui/js/H-ui.js"></script>
+	<div th:include="_footer::common_js"></div>
 
 	<!--请在下方写此页面业务相关的脚本-->
-	<script type="text/javascript" src="static/business/js/main.js"></script>
+	<script type="text/javascript" th:src="@{~/hotel-api/static/business/js/main.js}"></script>
 </body>
 </html>

@@ -1,7 +1,6 @@
 ﻿<!--_meta 作为公共模版分离出去-->
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="zh"
-	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
 <head>
 	<meta charset="utf-8">
 	<meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -10,136 +9,112 @@
 	<meta http-equiv="Cache-Control" content="no-siteapp" />
 	<link rel="Bookmark" href="favicon.ico" >
 	<link rel="Shortcut Icon" href="favicon.ico" />
-	<link rel="stylesheet" type="text/css" th:href="@{~/hotel-api/static/h-ui/css/H-ui.min.css}" />
-	<link rel="stylesheet" type="text/css" th:href="@{~/hotel-api/static/h-ui.admin.pro.iframe/css/h-ui.admin.pro.iframe.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{~/hotel-api/static/h-ui/css/H-ui.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{~/hotel-api/static/lib/Hui-iconfont/1.0.9/iconfont.css}" />
-	<link rel="stylesheet" type="text/css" th:href="@{~/hotel-api/static/h-ui.admin.pro/skin/default/skin.css}" id="skin" />
 	<link rel="stylesheet" type="text/css" th:href="@{~/hotel-api/static/business/css/style.css}" />
-	<!--[if IE 6]>
-
 	<script>DD_belatedPNG.fix('*');</script>
-	<![endif]-->
 	<!--/meta 作为公共模版分离出去-->
 
-	<title>用户列表</title>
-	<meta name="keywords" content="h-ui.admin.pro v1.0,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
-	<meta name="description" content="h-ui.admin.pro v1.0，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
+	<title>用户列表 - 用户列表 - by zou</title>
 </head>
 <body>
-	<!--_menu 作为公共模版分离出去-->
-	<!--<aside class="Hui-admin-aside-wrapper">
-		<div class="Hui-admin-logo-wrapper">
-			<a class="logo navbar-logo" href="/aboutHui.shtml">
-				<i class="va-m iconpic global-logo"></i>
-				<span class="va-m">H-ui.admin</span>
-			</a>
-		</div>
-		<div class="Hui-admin-menu-dropdown bk_2">
-			<ul class="Hui-menu"></ul>
-		</div>
-	</aside>-->
-	<aside class="Hui-admin-aside-wrapper" th:include="_menu::common_menu"></aside>
-	<div class="Hui-admin-aside-mask"></div>
-	<!--/_menu 作为公共模版分离出去-->
+<div class="wap-container">
+	<nav class="breadcrumb" style="background-color:#fff;padding: 0 24px">
+		首页
+		<span class="c-gray en">/</span>
+		用户管理
+		<span class="c-gray en">/</span>
+		用户列表
+		<a class="btn btn-success radius f-r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+	</nav>
 
-	<div class="Hui-admin-dislpayArrow">
-		<a href="javascript:void(0);" onClick="displaynavbar(this)">
-			<i class="Hui-iconfont Hui-iconfont-left">&#xe6d4;</i>
-		</a>
-	</div>
-
-	<section class="Hui-admin-article-wrapper">
-		<!--_header 作为公共模版分离出去-->
-		<header class="Hui-navbar" th:include="_header::common_header"></header>
-		<!--/_header 作为公共模版分离出去-->
-
-		<div class="Hui-admin-article">
-			<nav class="breadcrumb" style="background-color:#fff;padding: 0 24px">
-				首页
-				<span class="c-gray en">/</span>
-				用户管理
-				<span class="c-gray en">/</span>
-				用户列表
-			</nav>
-
-			<article class="Hui-admin-content clearfix">
-				<div class="panel">
-					<div class="panel-body">
-						<div class="text-c"> 日期范围：
-							<input type="text" id="search-datetime-start" class="input-text datetimepicker-input" style="width:120px;">
-							-
-							<input type="text" id="search-datetime-end" class="input-text datetimepicker-input" style="width:120px;">
-							<input type="text" class="input-text" style="width:250px" placeholder="输入管理员名称" id="" name="">
-							<button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
-						</div>
-					</div>
+	<article class="Hui-admin-content clearfix">
+		<div class="panel">
+			<div class="panel-body">
+				<div class="text-c"> 日期范围：
+					<input type="text" id="search-datetime-start" class="input-text datetimepicker-input" style="width:120px;">
+					-
+					<input type="text" id="search-datetime-end" class="input-text datetimepicker-input" style="width:120px;">
+					<input type="text" class="input-text" style="width:250px" placeholder="输入用户名称" id="" name="">
+					<button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
 				</div>
-
-				<div class="panel mt-20">
-					<div class="panel-body">
-						<div class="clearfix">
-							<span class="f-l">
-								<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
-								<a href="javascript:;" onclick="admin_add('添加用户','/hotel-api/hotel/user/admin-add-page')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加用户</a>
-							</span>
-							<span class="f-r">共有数据：<strong>54</strong> 条</span>
-						</div>
-						<div class="mt-20 clearfix">
-							<table class="table table-border table-bordered table-bg table-hover table-sort">
-								<thead>
-									<tr>
-										<th scope="col" colspan="9">员工列表</th>
-									</tr>
-									<tr class="text-c">
-										<th width="25"><input type="checkbox" name="" value=""></th>
-										<th width="40">ID</th>
-										<th width="150">登录名</th>
-										<th width="90">手机</th>
-										<th width="150">邮箱</th>
-										<th>角色</th>
-										<th width="130">加入时间</th>
-										<th width="100">是否已启用</th>
-										<th width="100">操作</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr class="text-c" th:each="user,iterStat : ${userInfoModelList}">
-										<td><input type="checkbox" th:value="${user.userId}" name=""></td>
-										<td th:text="${user.userId}">1</td>
-										<td th:text="${user.userName}">admin</td>
-										<td th:text="${user.phone}">13000000000</td>
-										<td th:text="${user.email}">admin@mail.com</td>
-										<td th:text="${user.roleName}">超级管理员</td>
-										<td th:text="${#dates.format(user.createDate,'yyyy-MM-dd HH:mm:ss')}">2014-6-11 11:11:42</td>
-										<td class="td-status" th:if="${user.disabled == 1}"><span class="label label-success radius">已启用</span></td>
-										<td class="td-status" th:if="${user.disabled == 0}"><span class="label radius">已停用</span></td>
-										<td class="td-manage">
-											<a style="text-decoration:none" onClick="admin_stop(this,'10001')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>
-											<a title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','admin-add.html')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-											<a title="删除" href="javascript:;" onclick="admin_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</article>
+			</div>
 		</div>
-	</section>
-	<!--_footer 作为公共模版分离出去-->
-	<div th:include="_footer::common_js"></div>
-	<!--/_footer /作为公共模版分离出去-->~
-	<script type="text/javascript" th:src="@{~/hotel-api/static/lib/datatables/1.10.15/jquery.dataTables.min.js}"></script>
-	<script type="text/javascript" th:src="@{~/hotel-api/static/lib/laypage/1.2/laypage.js}"></script>
-	<script type="text/javascript" th:src="@{~/hotel-api/static/business/js/main.js}"></script>
-	<script th:inline="javascript">
-		$(function(){
-			var menuData = [[${menuData}]];
-			menuData = JSON.parse(menuData);
-			getMenu(menuData);
-			runDatetimePicker();
-		});
-	</script>
+		<div class="panel mt-20">
+			<div class="panel-body">
+				<div class="clearfix">
+						<span class="f-l">
+							<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+							<a href="javascript:;" onclick="admin_add('添加用户','/hotel-api/hotel/user/admin-add-page')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a>
+						</span>
+					<span class="f-r">共有数据：<strong th:text="${size}">54</strong> 条</span>
+				</div>
+				<div class="mt-20 clearfix">
+					<table class="table table-border table-bordered table-bg table-hover table-sort">
+						<thead>
+						<tr>
+							<th scope="col" colspan="9">用户列表</th>
+						</tr>
+						<tr class="text-c">
+							<th width="25"><input type="checkbox" name="" value=""></th>
+							<th width="40">ID</th>
+							<th width="150">用户名</th>
+							<th width="90">手机</th>
+							<th width="150">邮箱</th>
+							<th>角色</th>
+							<th width="130">加入时间</th>
+							<th width="100">是否已启用</th>
+							<th width="100">操作</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr class="text-c" th:each="user,iterStat : ${userInfoModelList}">
+							<td><input type="checkbox" th:value="${user.userId}" name=""></td>
+							<td th:text="${user.userId}">1</td>
+							<td th:text="${user.userName}">admin</td>
+							<td th:text="${user.phone}">13000000000</td>
+							<td th:text="${user.email}">admin@mail.com</td>
+							<td th:text="${user.roleName}">超级管理员</td>
+							<td th:text="${#dates.format(user.createDate,'yyyy-MM-dd HH:mm:ss')}">2014-6-11 11:11:42</td>
+							<td class="td-status" th:if="${user.disabled == 1}"><span class="label label-success radius">已启用</span></td>
+							<td class="td-status" th:if="${user.disabled == 0}"><span class="label radius">已停用</span></td>
+							<td class="td-manage">
+								<a style="text-decoration:none" onClick="admin_stop(this,'10001')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>
+								<a title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','admin-add.html')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+								<a title="删除" href="javascript:;" onclick="admin_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</article>
+</div>
+
+<!--_footer 作为公共模版分离出去-->
+<div th:include="_footer::common_js"></div>
+<!--/_footer /作为公共模版分离出去-->
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" th:src="@{~/hotel-api/static/lib/datatables/1.10.15/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{~/hotel-api/static/lib/laypage/1.2/laypage.js}"></script>
+
+<script th:inline="javascript">
+	$(function(){
+		runDatetimePicker();
+		// 全选 页面调用
+		$(".table").HuicheckAll(
+				{
+					checkboxAll: 'thead input[type="checkbox"]',
+					checkbox: 'tbody input[type="checkbox"]'
+				},
+				function(checkedInfo) {
+					console.log(checkedInfo);
+				}
+		)
+	});
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
 </body>
 </html>
+

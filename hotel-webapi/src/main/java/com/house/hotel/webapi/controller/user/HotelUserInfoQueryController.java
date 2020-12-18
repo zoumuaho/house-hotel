@@ -13,7 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author muhao.zou
@@ -31,7 +33,10 @@ public class HotelUserInfoQueryController {
     @GetMapping(value = "/list")
     public ModelAndView getHotelUserInfoList() {
         List<HotelUserInfoModel> userInfoModelList = hotelUserInfoService.listHotelUserInfo();
-        return new ModelAndView("admin-list", "userInfoModelList", userInfoModelList);
+        Map<String,Object> hashMap= new HashMap<>();
+        hashMap.put("size",userInfoModelList.size());
+        hashMap.put("userInfoModelList",userInfoModelList);
+        return new ModelAndView("admin-list", hashMap);
     }
 
     @GetMapping(value = "/admin-add-page")
